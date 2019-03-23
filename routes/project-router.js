@@ -8,6 +8,18 @@ const db = require("./../data/helpers/projectModel");
 // /api/projects/:id
 // - `get()`: calling get returns an array of all the resources contained in the database. If you pass an `id` to this method it will return the resource with that id if one is found.
 
+router.get("/", async (req, res) => {
+  console.log(req.query);
+  try {
+    projects = await db.get();
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({
+      error: "There was an error while getting the projects."
+    });
+  }
+});
+
 // TODO:
 // post
 // /api/projects

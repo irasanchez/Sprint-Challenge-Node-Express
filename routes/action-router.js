@@ -7,6 +7,16 @@ const db = require("./../data/helpers/actionModel");
 // /api/actions
 // /api/actions/:id
 // - `get()`: calling get returns an array of all the resources contained in the database. If you pass an `id` to this method it will return the resource with that id if one is found.
+router.get("/", async (req, res) => {
+  try {
+    actions = await db.get();
+    res.status(200).json(actions);
+  } catch (error) {
+    res.status(500).json({
+      error: "There was an error while getting the users."
+    });
+  }
+});
 
 // TODO:
 // post
