@@ -93,4 +93,23 @@ router.delete("/:id", async (req, res) => {
 // /api/projects/:id
 // The `projectModel.js` helper includes an extra method called `getProjectActions()` that takes a _project id_ as it's only argument and returns a list of all the _actions_ for the _project_.
 
+router.get("/:id/actions", async (req, res) => {
+  try {
+    const projectId = req.params.id;
+    const projectActions = await db.getProjectActions(projectId);
+
+    if (projectActions) {
+      res.status(200).json(projectActions);
+    } else {
+      res
+        .status(404)
+        .json({ message: "This project doesn't seem to have any actions." });
+    }
+  } catch (err0r) {
+    res
+      .status(404)
+      .json({ error: "The project's actions could not be found." });
+  }
+});
+
 module.exports = router;
