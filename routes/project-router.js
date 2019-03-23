@@ -20,6 +20,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const project = await db.get(req.params.id);
+    res.status(200).json(project);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "The project information could not be retrieved." });
+  }
+});
+
 // TODO:
 // post
 // /api/projects

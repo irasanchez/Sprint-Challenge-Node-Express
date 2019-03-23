@@ -18,6 +18,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const action = await db.get(req.params.id);
+    res.status(200).json(action);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "The action information could not be retrieved." });
+  }
+});
+
 // TODO:
 // post
 // /api/actions
