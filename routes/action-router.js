@@ -56,6 +56,20 @@ router.post("/", async (req, res) => {
 // /api/actions/:id
 // - `update()`: accepts two arguments, the first is the `id` of the resource to update, and the second is an object with the `changes` to apply. It returns the updated resource. If a resource with the provided `id` is not found, the method returns `null`.
 
+router.put("/:id", async (req, res) => {
+  try {
+    const action = await db.update(req.params.id, req.body);
+    if (action) {
+      res.status(200).json(action);
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "The action information could not be modified" });
+  }
+});
+
 // TODO:
 // delete
 // /api/actions/:id

@@ -59,6 +59,19 @@ router.post("/", async (req, res) => {
 // /api/projects/:id
 // - `update()`: accepts two arguments, the first is the `id` of the resource to update, and the second is an object with the `changes` to apply. It returns the updated resource. If a resource with the provided `id` is not found, the method returns `null`.
 
+router.put("/:id", async (req, res) => {
+  try {
+    const project = await db.update(req.params.id, req.body);
+    if (project) {
+      res.status(200).json(project);
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "The project information could not be modified" });
+  }
+});
+
 // TODO:
 // delete
 // /api/projects/:id
