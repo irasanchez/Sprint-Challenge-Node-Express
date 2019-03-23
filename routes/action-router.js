@@ -34,6 +34,23 @@ router.get("/:id", async (req, res) => {
 // /api/actions
 // - `insert()`: calling insert passing it a resource object will add it to the database and return the newly created resource.
 
+router.post("/", async (req, res) => {
+  try {
+    const action = await db.insert(req.body);
+    if (action) {
+      res.status(201).json(action);
+    } else {
+      res.status(500).json({
+        error: "There was an error while saving the action to the database"
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: "There was an error while saving the action to the database"
+    });
+  }
+});
+
 // TODO:
 // put
 // /api/actions/:id
