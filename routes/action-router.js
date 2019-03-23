@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("./../data/helpers/actionModel");
 
-// TODO:
 // get
 // /api/actions
 // /api/actions/:id
@@ -29,7 +28,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// TODO:
 // post
 // /api/actions
 // - `insert()`: calling insert passing it a resource object will add it to the database and return the newly created resource.
@@ -51,7 +49,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// TODO:
 // put
 // /api/actions/:id
 // - `update()`: accepts two arguments, the first is the `id` of the resource to update, and the second is an object with the `changes` to apply. It returns the updated resource. If a resource with the provided `id` is not found, the method returns `null`.
@@ -70,9 +67,23 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// TODO:
 // delete
 // /api/actions/:id
 // - `remove()`: the remove method accepts an `id` as it's first parameter and, upon successfully deleting the resource from the database, returns the number of records deleted.
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const actionId = req.params.id;
+    const deletedActions = await db.remove(actionId);
+
+    if (deletedActions > 0) {
+      res
+        .status(200)
+        .json({ message: "This action has been successfully deleted" });
+    }
+  } catch (error) {
+    res.status(404).json({ error: "The action could not be deleted." });
+  }
+});
 
 module.exports = router;
